@@ -61,6 +61,13 @@ Protected Class MacSystemProfiler
 
 	#tag Method, Flags = &h0
 		Sub Constructor(level As DetailLevel, ParamArray dataType As String)
+		  me.Constructor( nil, level, join( dataType, " " ) )
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub Constructor(Optional remoteIPAddress As Obj_IPV4Address, level As DetailLevel, ParamArray dataType As String)
 		  #if TargetMacOS
 		    
 		    ConstructorShared()
@@ -114,7 +121,7 @@ Protected Class MacSystemProfiler
 
 	#tag Method, Flags = &h0
 		Sub Constructor(ParamArray dataType As String)
-		  me.Constructor( DetailLevel.Basic, join( dataType, " " ) )
+		  me.Constructor( nil, DetailLevel.Basic, join( dataType, " " ) )
 		  
 		End Sub
 	#tag EndMethod
@@ -232,10 +239,11 @@ Protected Class MacSystemProfiler
 		    if s <> "" then
 		      cmd = cmd + " " + s
 		    end if
-		    dim sh as new Shell
-		    sh.Execute cmd
-		    return sh.Result
-		    
+		    if ip
+		      dim sh as new Shell
+		      sh.Execute cmd
+		      return sh.Result
+		      
 		  #else
 		    
 		    #pragma unused switches
@@ -587,7 +595,7 @@ Protected Class MacSystemProfiler
 		      dim item as MacPListBrowser = p( i ).Child( "_items" )
 		      dim found() as MacPListBrowser
 		      if identifierKey = "" or identifierValue = "" then
-		         found = item.FindByKey( key )
+		        found = item.FindByKey( key )
 		      else
 		        found = item.FindByKeyAndValue( identifierKey, identifierValue )
 		        if found.Ubound <> -1 then
@@ -712,7 +720,6 @@ Protected Class MacSystemProfiler
 		SPNetworkVolumeDataType
 		SPWWANDataType
 		SPAirPortDataType
-		
 	#tag EndNote
 
 	#tag Note, Name = Legal
@@ -803,8 +810,6 @@ Protected Class MacSystemProfiler
 		Data types always take the form "SP...DataType", e.g., "SPHardwareDataType" and "SPSoftwareDataType". As a
 		convenience, you only need to specify the part between "SP" and "DataType" and MacSystemProfiler will
 		fill in the rest for you, e.g., "Hardware" will automagically become "SPHardwareDataType".
-		
-		
 	#tag EndNote
 
 
@@ -1083,7 +1088,7 @@ Protected Class MacSystemProfiler
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="DataTypesString"
+			Name="DataTypesAsString"
 			Group="Behavior"
 			Type="String"
 		#tag EndViewProperty

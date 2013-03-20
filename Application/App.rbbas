@@ -25,6 +25,10 @@ Inherits Application
 		  
 		  Cocoa.Initialize
 		  
+		  #pragma warning "DELETE THIS CODE"
+		  
+		  dim ip as Obj_IPV4Address = "192.168.1.1"
+		  break
 		End Sub
 	#tag EndEvent
 
