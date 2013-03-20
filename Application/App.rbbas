@@ -11,6 +11,7 @@ Inherits Application
 		  TestFileManager
 		  TestBundleLookup
 		  TestCocoa
+		  
 		End Sub
 	#tag EndEvent
 
@@ -210,6 +211,14 @@ Inherits Application
 		Function CoreGraphicsRadialShadingExample() As Boolean Handles CoreGraphicsRadialShadingExample.Action
 			RadialShadingExample.Show
 			return true
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function CoreTextOpenExampleWindow() As Boolean Handles CoreTextOpenExampleWindow.Action
+			CoreTextExample.Show
+			Return True
+			
 		End Function
 	#tag EndMenuHandler
 
